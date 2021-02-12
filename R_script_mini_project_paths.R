@@ -23,7 +23,7 @@ library("RColorBrewer")
 # See RColorBrewer examples here:
 # https://www.datanovia.com/en/blog/top-r-color-palettes-to-know-for-great-data-visualization/
 # In plots we use the BuGn scale for absolute plots (i.e. looking at one time-period)
-col = brewer.pal(7, "BuGn"),
+# col = brewer.pal(7, "BuGn"),
 # and we use the BrBG colour scale for differences between two time periods:
 #  col = brewer.pal(7, "BrBG"),
 
@@ -61,6 +61,11 @@ plot(coastsCoarse,add=T)
 ##The above is actual harvest data for maize (there is the equivalent data file
 #for wheat in the data folder). 
 
+# Try mapping several of these - you can also combine them if you like (check units). 
+# To see what is available look at Files on the right (by plots), then click on 
+# shared -> data -> Agriculture -> HarvestedArea_Yields_Monfreda
+
+
 # ------------------------------------------------
 # 2.  A look at model projections
 # ------------------------------------------------
@@ -74,8 +79,7 @@ plot(coastsCoarse,add=T)
 
 
 ## let's try looking at the model projection for Maize with very low N fertilization. We will follow 
-the same workflow as for the 
-#harvest area data above.
+# the same workflow as for the harvest area data above.
 setwd("~/shared/data/Agriculture/Crop_models/LPJmL/maize/A0")
 
 file_model_maize<-nc_open('lpjml_agmerra_fullharm_yield_mai_global_annual_1980_2010_C360_T0_W0_N10_A0_1deg_mean.nc4')
@@ -98,7 +102,7 @@ plot(coastsCoarse,add=T)
 # With a model we can also look at projections of yield etc given a warmer climate.
 # So let's load in a model projection with 2 C of warming:
 
-file_model_maize_plus2C<nc_open('lpjml_agmerra_fullharm_yield_mai_global_annual_1980_2010_C360_T2_W0_N10_A0_1deg_mean.nc4')
+file_model_maize_plus2C<-nc_open('lpjml_agmerra_fullharm_yield_mai_global_annual_1980_2010_C360_T2_W0_N10_A0_1deg_mean.nc4')
 data_model_maize_plus2C <- ncvar_get(nc=file_model_maize_plus2C, varid='yield_mai')
 nc_close(file_model_maize_plus2C)
 data_model_maize_plus2C_flip <- data_model_maize_plus2C[,180:1]
@@ -123,7 +127,7 @@ plot(coastsCoarse,add=T)
 
 # Let's calculate the global mean change:
 
- glob_yield_change_plus_2C<- mean(data_model_maize_pluse2C_minus_baseline,na.rm=TRUE)
+ glob_yield_change_plus_2C<- mean(data_model_maize_plus2C_minus_baseline,na.rm=TRUE)
  print(glob_yield_change_plus_2C)
 
 # How about computing this as a % change?
@@ -313,8 +317,8 @@ plot(coastsCoarse,add=T)
 # and 
 
  setwd("~/shared/data/Policy_scenarios/BECCS_LU_scenarios")
- file_proj_natural_2085<-nc_open('MAgPIE_NoLuMIT-RCP26_2085_natural.nc')
-
+  file_proj_natural_2085<-nc_open('MAgPIE_MIT-BIO-RCP26_2085_natural.nc')
+  
 # You final task is to explore the impact of BECCS on natural areas.
 # Which time period is worse? (choose from 2005, 2035, 2085)
 # Which regions are worst hit?
